@@ -48,7 +48,6 @@ RUN set -xe \
 	&& apk add --virtual .erlang-rundeps $runDeps lksctp-tools \
 	&& apk del .fetch-deps .build-deps
 
-# elixir expects utf8.
 ENV ELIXIR_VERSION="v1.6.6" \
 	LANG=C.UTF-8
 
