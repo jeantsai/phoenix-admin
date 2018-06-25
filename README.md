@@ -1,4 +1,5 @@
 # Develop Phoenix applications in Docker containers
+  [![Build Status][travis-image]][travis-url] 
 
 > Want to try Phoenix 1.4 before its official releasing? this project make you able to try Phoenix of the latest version from its master branch through a Docker container based on Alpine, without potential conflicts with your current working on production versions of Phoenix.
 
@@ -31,4 +32,13 @@ docker-compose down
 
 # License
 
+View [license information](https://github.com/nodejs/node/blob/master/LICENSE) for the software contained in the Docker image in this project.
+
+As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
+
+As for any pre-built image usage, it is the image user's responsibility to ensure that any use of this image complies with any relevant licenses for all software contained within.
+
 MIT © [Jun Cai](https://github.com/jeantsai)
+
+[travis-image]: https://travis-ci.org/jeantsai/generator-jhipster-circleci-2.svg?branch=master
+[travis-url]: https://travis-ci.org/jeantsai/generator-jhipster-circleci-2
