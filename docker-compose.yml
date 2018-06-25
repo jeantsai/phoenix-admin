@@ -9,7 +9,6 @@ services:
     volumes:
       - ./db/pg-data:/var/lib/postgresql/data
   phx:
-    build: ./docker
     image: jeantsai/phoenix-preview-alpine
     ports:
       - 4100:4000
