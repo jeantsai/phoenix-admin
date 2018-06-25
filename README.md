@@ -1,4 +1,4 @@
-# docker-alpine-phoenix-preview
+# Develop Phoenix applications in Docker containers
 
 > Want to try Phoenix 1.4 before its official releasing? this project make you able to try Phoenix of the latest version from its master branch through a Docker container based on Alpine, without potential conflicts with your current working on production versions of Phoenix.
 
@@ -27,37 +27,6 @@ docker-compose up -d
 ```bash
 docker-compose down
 ```
-
-## Or, use image from Docker Hub directly
-
-Create a docker-compose.yml:
-```
-version: '3'
-
-services:
-  postgres:
-    image: postgres:10-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: M0bi1e
-    volumes:
-      - ./db/pg-data:/var/lib/postgresql/data
-  phx:
-    image: alpine-phoenix-preview
-    ports:
-      - 4100:4000
-    volumes:
-      - .:/app
-    links:
-      - postgres
-    entrypoint:
-      - sh
-    stdin_open: true
-    tty: true
-```
-
-Then, start / stop it as above section.
-
 
 
 # License

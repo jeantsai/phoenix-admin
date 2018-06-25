@@ -1,4 +1,4 @@
-FROM alpine-elixir-nodejs
+FROM jeantsai/elixir-node-alpine
 
 RUN PHOENIX_DOWNLOAD_URL="https://github.com/phoenixframework/phoenix/archive/master.zip" \
 	&& buildDeps=' \
