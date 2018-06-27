@@ -10,25 +10,140 @@
 
 This a Docker image for try next release of Phoenix framework before its official releasing. Currently, Phoenix 1.4 could be tried before it may be released later this year.
 
+## Other benefits
+
+* Isolate different Elixir or Phoenix projects' development environments, avoiding contamination of Elixir/Erlang environment on your desktop.
+* Easy to add dependent components, such as database, message broker, etc. E.g. a Postgres database container will be bootstrapped by default.
+
 
 # Usage
 
-## Download or clone this project
+## Setup
 
-Download or clone this project into a local system with Docker runtime having been installed already.
+### Configure a container scheduling plan
 
-Just start the latest Phoenix server through Docker Compose:
+For simplification, we are using Docker Compose here. 
 
-```bash
+There are two ways to setup a docker-compose.yml.
+
+1. Leverage [this project](https://github.com/jeantsai/docker-phoenix-preview)
+Fork or download a zipped one of this project. There is a docker-compose.yml inside it along other staffs you may need.
+
+2. Create on from scratch
+You can create one based on the following example:
+```Yaml
+version: '3'
+
+services:
+  postgres:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: M0bi1e
+    volumes:
+      - ./db/pg-data:/var/lib/postgresql/data
+  phx:
+    image: jeantsai/phoenix-preview-alpine
+    ports:
+      - 4100:4000
+    volumes:
+      - .:/app
+    links:
+      - postgres
+    entrypoint:
+      - sh
+    stdin_open: true
+    tty: true
+```
+
+## Start up
+
+### Bootstrap all containers
+
+There are two ways to start this development environment.
+
+1. Bootstrap through Docker Compose
+Just run the following Docker Compose command to start up all containers:
+```
 docker-compose up -d
 ```
 
-> Don't forget stop and close the Phoenix container after your finish your working. Just treat is as a part of you IDE for Phoenix developments.
+2. Bootstrap through you IDE
+Many IDE started to support Docker nowadays. Take VS code for example here.
 
-```bash
-docker-compose down
+Just right click on file "docker-compose.yml" and select **"Compose Up"**. 
+
+
+### Connect to Phoenix
+
+You can use Phoenix by attache a terminal to the developing container through the following ways.
+
+1. Through Docker Command Line
+```
+docker exec -it <developing docker name or ID> /bin/sh
 ```
 
+2. Through your IDE
+Take VS Code for example:
+
+Just go to the Docker container list by clicking the Docker Icon on the left side menu, and then right click the developing container, and then select **"Attach Shell" from the context menu.
+
+
+## Use Phoenix
+
+### First, generate the scaffold
+
+Connect to Phoenix container from a terminal, then run the following command to generate a Phoenix project scaffold:
+```
+cd /app
+/app # mix phx.new chatter
+```
+
+> Make sure your current working directory is /app. Since we mount the project folder on our host system to the /app on Phoenix container, we will place the generated Phoenix project one layer beleath our project folder on host system.
+
+Phoenix will ask whether it need to install dependencies for us. Since we want to use **Yarn** instead of **npm**, please select no, and then complete the following steps.
+
+### Setup the generated Phoenix project
+
+#### Install Elixir dependencies
+From the main folder of the newly generated Phoenix project, run the following command:
+```
+mix deps.get
+```
+
+#### Install frontend NodeJS dependencies
+Enter into the main folder of the frontend part of the newly generated Phoenix project. Currently, it is "assets". Run the following command:
+```
+cd asserts
+yarn install
+/app/chatter/assets # node node_modules/webpack/bin/webpack.js --mode development
+```
+
+#### Configure database connection
+Find "config :chatter :Chatter.Repo" inside file chatter/config/dev.exs, update password and hostname as below:
+```
+  password: "M0bi1e",
+  hostname: "postgres"
+```
+
+#### Initialize database
+Run the follwoing command from the main folder of the generated Phoenix project:
+```
+mix ecto.create
+```
+
+#### Start developing server
+Run the follwoing command from the main folder of the generated Phoenix project:
+```
+mix phx.server
+```
+Or, run the following comannd to start it in interactive way:
+```
+iex -S phx.server
+```
+
+
+## 
 
 # License
 
