@@ -31,7 +31,8 @@ Fork or download a zipped one of this project. There is a docker-compose.yml ins
 
 2. Create on from scratch
 You can create one based on the following example:
-```Yaml
+
+```yaml
 version: '3'
 
 services:
