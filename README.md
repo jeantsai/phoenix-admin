@@ -142,8 +142,8 @@ Or, run the following comannd to start it in interactive way:
 iex -S phx.server
 ```
 
+> **NOTES:** To avoid potential port conflict with Phoenix project residing on the host system, the Phoenix container will use port "4100" instead of "4000" by default. 
 
-## 
 
 # License
 
