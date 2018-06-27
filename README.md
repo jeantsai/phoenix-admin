@@ -44,7 +44,7 @@ services:
     volumes:
       - ./db/pg-data:/var/lib/postgresql/data
   phx:
-    image: jeantsai/phoenix-preview-alpine
+    image: jeantsai/phoenix-alpine
     ports:
       - 4100:4000
     volumes:
