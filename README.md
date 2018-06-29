@@ -20,17 +20,15 @@ This a Docker image for try next release of Phoenix framework before its officia
 
 ## Setup
 
-### Configure a container scheduling plan
+### Setup your project
 
-For simplification, we are using Docker Compose here. 
-
-There are two ways to setup a docker-compose.yml.
+We use Docker Compose to introduce the Phoenix development environment into your own project, There are two ways to achieve this:
 
 1. Leverage [this project](https://github.com/jeantsai/docker-phoenix-preview)
-Fork or download a zipped one of this project. There is a docker-compose.yml inside it along other staffs you may need.
+Fork, import or download a zipped one of this project. Inside this project, there is a docker-compose.yml which you can run to bootstrap the whold Phoenix development environment.
 
-2. Create on from scratch
-You can create one based on the following example:
+1. Create one from scratch
+You can create a docker-compose.yml by refering the following example:
 
 ```yaml
 version: '3'
@@ -57,7 +55,7 @@ services:
     tty: true
 ```
 
-## Start up
+## Bootstrap the environment
 
 ### Bootstrap all containers
 
@@ -90,21 +88,27 @@ Take VS Code for example:
 Just go to the Docker container list by clicking the Docker Icon on the left side menu, and then right click the developing container, and then select **"Attach Shell" from the context menu.
 
 
-## Use Phoenix
+## Run Phoenix
 
-### First, generate the scaffold
+### Start the scaffolding
 
 Connect to Phoenix container from a terminal, then run the following command to generate a Phoenix project scaffold:
+Assume "chatter" is your project name.
 ```
-cd /app
 /app # mix phx.new chatter
 ```
 
-> Make sure your current working directory is /app. Since we mount the project folder on our host system to the /app on Phoenix container, we will place the generated Phoenix project one layer beleath our project folder on host system.
+if you want to use your project root folder - where the docker-compose.yml located - as your Phoenix project's root folder, you can call Phoenix's scaffolding function as following.
+```
+/app # mix phx.new --module Chatter --app chatter .
+```
 
-Phoenix will ask whether it need to install dependencies for us. Since we want to use **Yarn** instead of **npm**, please select no, and then complete the following steps.
+> Make sure your current working directory is /app. Since we mount the project folder on our host system to the /app on Phoenix container, we will place the generated Phoenix project one layer beleath our project root folder on host system unless you choose the second way just metioned right above.
 
-### Setup the generated Phoenix project
+
+### Complete the scaffolding
+
+At the end of the running of phx.new, you will be asked whether the dependencies should be installed for us automatically, please answer "no", since we want to use **Yarn** to instead of **npm**.
 
 #### Install Elixir dependencies
 From the main folder of the newly generated Phoenix project, run the following command:
