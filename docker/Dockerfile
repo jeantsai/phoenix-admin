@@ -5,6 +5,7 @@ RUN PHOENIX_DOWNLOAD_URL="https://github.com/phoenixframework/phoenix/archive/ma
 		ca-certificates \
 		curl \
 		unzip \
+                bash bash-doc bash-completion \
 	' \
 	&& apk add --no-cache --virtual .build-deps $buildDeps \
 	&& curl -fSL -o phoenix.zip $PHOENIX_DOWNLOAD_URL \
