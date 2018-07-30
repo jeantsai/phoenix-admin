@@ -5,7 +5,6 @@ RUN PHOENIX_DOWNLOAD_URL="https://github.com/phoenixframework/phoenix/archive/ma
 		ca-certificates \
 		curl \
 		unzip \
-                bash bash-doc bash-completion \
 	' \
 	&& apk add --no-cache --virtual .build-deps $buildDeps \
 	&& curl -fSL -o phoenix.zip $PHOENIX_DOWNLOAD_URL \
@@ -13,7 +12,7 @@ RUN PHOENIX_DOWNLOAD_URL="https://github.com/phoenixframework/phoenix/archive/ma
 	&& rm phoenix.zip \
 	&& apk del .build-deps \
     && mix local.hex --force \
-    && apk add --no-cache git openssh \
+    && apk add --no-cache git openssh bash bash-doc bash-completion \
     && cd phoenix-master/installer \
     && echo 'Y' | MIX_ENV=prod mix do archive.build, archive.install \
 	&& apk add --no-cache inotify-tools
